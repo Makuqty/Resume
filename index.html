@@ -139,67 +139,154 @@
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" onclick="openModal('modal1')">
                     <div class="project-image">
-                        <i class="bi bi-cart-fill"></i>
+                        <img src="systems/Aral AI/image1.png" alt="Aral AI" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="project-placeholder" style="display:none"><i class="bi bi-robot"></i></div>
                     </div>
-                    <div class="project-content">
-                        <h3>ShopSphere E-Commerce</h3>
-                        <p>Enterprise-grade e-commerce platform with advanced inventory management, multi-payment gateways, real-time analytics, and responsive admin dashboard.</p>
-                        <div class="project-tech">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
-                            <span>Stripe API</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="bi bi-box-arrow-up-right"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="bi bi-github"></i> Source Code</a>
-                        </div>
+                    <div class="project-overlay">
+                        <h3>Aral AI</h3>
+                        <p>Click to view details</p>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="openModal('modal2')">
                     <div class="project-image">
-                        <i class="bi bi-kanban"></i>
+                        <img src="systems/CLC Marketing Ventures/image1.png" alt="CLC Marketing Ventures" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="project-placeholder" style="display:none"><i class="bi bi-megaphone"></i></div>
                     </div>
-                    <div class="project-content">
-                        <h3>TeamFlow Project Manager</h3>
-                        <p>Advanced project management suite with Kanban boards, time tracking, team collaboration, file sharing, and automated workflow notifications.</p>
-                        <div class="project-tech">
-                            <span>Vue.js</span>
-                            <span>Express</span>
-                            <span>PostgreSQL</span>
-                            <span>Socket.io</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="bi bi-box-arrow-up-right"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="bi bi-github"></i> Source Code</a>
-                        </div>
+                    <div class="project-overlay">
+                        <h3>CLC Marketing Ventures</h3>
+                        <p>Click to view details</p>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" onclick="openModal('modal3')">
                     <div class="project-image">
-                        <i class="bi bi-graph-up-arrow"></i>
+                        <img src="systems/LPHS Enrollment System/image1.png" alt="LPHS Enrollment System" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="project-placeholder" style="display:none"><i class="bi bi-person-plus"></i></div>
                     </div>
-                    <div class="project-content">
-                        <h3>DataViz Analytics Hub</h3>
-                        <p>Comprehensive business intelligence platform featuring interactive dashboards, predictive analytics, custom reporting, and real-time data visualization.</p>
-                        <div class="project-tech">
-                            <span>React</span>
-                            <span>Python</span>
-                            <span>Django</span>
-                            <span>D3.js</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="bi bi-box-arrow-up-right"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="bi bi-github"></i> Source Code</a>
-                        </div>
+                    <div class="project-overlay">
+                        <h3>LPHS Enrollment System</h3>
+                        <p>Click to view details</p>
                     </div>
                 </div>
-
+                <div class="project-card" onclick="openModal('modal4')">
+                    <div class="project-image">
+                        <img src="systems/Saint Paul Library System/image1 (1).png" alt="Saint Paul Library System" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="project-placeholder" style="display:none"><i class="bi bi-book"></i></div>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Saint Paul Library System</h3>
+                        <p>Click to view details</p>
+                    </div>
+                </div>
+                <div class="project-card" onclick="openModal('modal5')">
+                    <div class="project-image">
+                        <img src="systems/Total Graphic Advertising/image1 (1).png" alt="Total Graphic Advertising" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="project-placeholder" style="display:none"><i class="bi bi-palette"></i></div>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Total Graphic Advertising</h3>
+                        <p>Click to view details</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Project Modals -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal1')">&times;</span>
+            <h2>Aral AI</h2>
+            <div class="modal-images">
+                <img src="systems/Aral AI/image1.png" alt="Aral AI Screenshot 1">
+                <img src="systems/Aral AI/image2.png" alt="Aral AI Screenshot 2">
+                <img src="systems/Aral AI/image3.png" alt="Aral AI Screenshot 3">
+            </div>
+            <p>AI-powered system with advanced machine learning capabilities and intelligent automation features.</p>
+            <div class="project-tech">
+                <span>AI/ML</span>
+                <span>Python</span>
+                <span>TensorFlow</span>
+                <span>React</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal2')">&times;</span>
+            <h2>CLC Marketing Ventures</h2>
+            <div class="modal-images">
+                <img src="systems/CLC Marketing Ventures/image1.png" alt="CLC Marketing Screenshot 1">
+                <img src="systems/CLC Marketing Ventures/image2.png" alt="CLC Marketing Screenshot 2">
+                <img src="systems/CLC Marketing Ventures/image3.png" alt="CLC Marketing Screenshot 3">
+            </div>
+            <p>Comprehensive marketing management system with campaign tracking, analytics, and client management features.</p>
+            <div class="project-tech">
+                <span>PHP</span>
+                <span>MySQL</span>
+                <span>JavaScript</span>
+                <span>Bootstrap</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal3')">&times;</span>
+            <h2>LPHS Enrollment System</h2>
+            <div class="modal-images">
+                <img src="systems/LPHS Enrollment System/image1.png" alt="LPHS Enrollment Screenshot 1">
+                <img src="systems/LPHS Enrollment System/image2.png" alt="LPHS Enrollment Screenshot 2">
+            </div>
+            <p>Student enrollment management system with automated registration, document handling, and administrative dashboard.</p>
+            <div class="project-tech">
+                <span>PHP</span>
+                <span>MySQL</span>
+                <span>HTML/CSS</span>
+                <span>JavaScript</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal4')">&times;</span>
+            <h2>Saint Paul Library System</h2>
+            <div class="modal-images">
+                <img src="systems/Saint Paul Library System/image1 (1).png" alt="Library System Screenshot 1">
+                <img src="systems/Saint Paul Library System/image2.png" alt="Library System Screenshot 2">
+                <img src="systems/Saint Paul Library System/image3.png" alt="Library System Screenshot 3">
+            </div>
+            <p>Digital library management system with book cataloging, member management, and borrowing tracking capabilities.</p>
+            <div class="project-tech">
+                <span>PHP</span>
+                <span>MySQL</span>
+                <span>jQuery</span>
+                <span>Bootstrap</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal5')">&times;</span>
+            <h2>Total Graphic Advertising</h2>
+            <div class="modal-images">
+                <img src="systems/Total Graphic Advertising/image1 (1).png" alt="TGA Screenshot 1">
+                <img src="systems/Total Graphic Advertising/image2.png" alt="TGA Screenshot 2">
+                <img src="systems/Total Graphic Advertising/image3.png" alt="TGA Screenshot 3">
+            </div>
+            <p>Creative advertising management platform with design tools, client portfolio, and project workflow management.</p>
+            <div class="project-tech">
+                <span>React</span>
+                <span>Node.js</span>
+                <span>MongoDB</span>
+                <span>Express</span>
+            </div>
+        </div>
+    </div>
 
     <section id="contact" class="contact">
         <div class="container">
