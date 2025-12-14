@@ -722,6 +722,33 @@ section {
 .project-overlay p {
     font-size: 0.9rem;
     opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.project-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.project-tags span {
+    background: rgba(0, 212, 255, 0.3);
+    color: var(--primary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.view-all-container {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.project-card.hidden {
+    display: none;
 }
 
 @keyframes rotate {
