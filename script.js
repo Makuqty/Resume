@@ -81,9 +81,14 @@ class ParticleSystem {
 
 new ParticleSystem();
 
-// Mobile menu
+// Mobile menu (hamburger removed but keeping for compatibility)
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
+
+// Skip hamburger functionality if element doesn't exist
+if (!hamburger) {
+    console.log('Hamburger menu not found - mobile navigation disabled');
+}
 
 const mobileMenuStyles = document.createElement('style');
 mobileMenuStyles.textContent = `
@@ -141,15 +146,18 @@ mobileMenuStyles.textContent = `
 `;
 document.head.appendChild(mobileMenuStyles);
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+// Only add hamburger functionality if element exists
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
 
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
+    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }));
+}
 
 // Scroll progress
 const scrollProgress = document.createElement('div');
@@ -158,11 +166,24 @@ document.body.appendChild(scrollProgress);
 
 
 
-// Scroll animations
+// Enhanced scroll animations with bidirectional effects
 const observer = new IntersectionObserver(entries => {
     entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        if (entry.isIntersecting && entry.target) {
+            setTimeout(() => {
+                if (entry.target && entry.target.classList) {
+                    entry.target.classList.add('visible');
+                }
+            }, i * 100);
+        } else if (entry.target && entry.target.classList) {
+            // Add exit animation when scrolling up
+            entry.target.classList.remove('visible');
+            entry.target.classList.add('fade-out');
+            setTimeout(() => {
+                if (entry.target && entry.target.classList) {
+                    entry.target.classList.remove('fade-out');
+                }
+            }, 300);
         }
     });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
@@ -192,16 +213,39 @@ function initAnimations() {
     });
 }
 
-// Enhanced scroll effects
+// Enhanced scroll effects with bidirectional animations
+let scrollTimeout;
+let lastScrollY = 0;
+
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    
-    // Parallax
-    const hero = document.querySelector('.hero::before');
-    if (hero) hero.style.transform = `translate3d(0,${scrolled * -0.3}px,0)`;
-    
-    const profile = document.querySelector('.profile-placeholder');
-    if (profile) profile.style.transform = `translate3d(0,${scrolled * -0.1}px,0)`;
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(() => {
+        scrollTimeout = null;
+        
+        const scrolled = window.pageYOffset;
+        const scrollDirection = scrolled > lastScrollY ? 'down' : 'up';
+        lastScrollY = scrolled;
+        
+        // Enhanced parallax with direction-based effects
+        try {
+            const profile = document.querySelector('.profile-placeholder');
+            if (profile) {
+                const parallaxOffset = scrolled * -0.1;
+                const rotationOffset = scrollDirection === 'up' ? -2 : 2;
+                profile.style.transform = `translate3d(0,${parallaxOffset}px,0) rotate(${rotationOffset}deg)`;
+            }
+            
+            // Floating elements respond to scroll direction
+            document.querySelectorAll('.floating-icon').forEach((icon, i) => {
+                if (icon && icon.style) {
+                    const baseOffset = Math.sin(scrolled * 0.01 + i) * 10;
+                    const directionOffset = scrollDirection === 'up' ? -5 : 5;
+                    icon.style.transform = `translateY(${baseOffset + directionOffset}px) rotate(${scrolled * 0.1}deg)`;
+                }
+            });
+        } catch (e) {
+            console.warn('Parallax effect error:', e);
+        }
     
     // Progress bar
     const scrollPercent = (scrolled / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
@@ -232,10 +276,34 @@ window.addEventListener('scroll', () => {
         }
     });
     
-    // Floating tags
-    document.querySelectorAll('.skill-tag').forEach((tag, i) => {
-        tag.style.transform = `translateY(${Math.sin(scrolled * 0.01 + i) * 0.5}px)`;
-    });
+    // Enhanced animations based on scroll direction
+    try {
+        // Animate project cards with 3D effects
+        document.querySelectorAll('.project-card').forEach((card, i) => {
+            if (card && card.style) {
+                const cardRect = card.getBoundingClientRect();
+                const isVisible = cardRect.top < window.innerHeight && cardRect.bottom > 0;
+                
+                if (isVisible) {
+                    const intensity = scrollDirection === 'up' ? 0.5 : -0.5;
+                    card.style.transform = `translateY(${intensity}px) rotateX(${scrollDirection === 'up' ? '2deg' : '-2deg'})`;
+                }
+            }
+        });
+        
+        // Enhanced skill tags animation
+        document.querySelectorAll('.skill-tag').forEach((tag, i) => {
+            if (tag && tag.style) {
+                const baseFloat = Math.sin(scrolled * 0.01 + i) * 0.5;
+                const directionBoost = scrollDirection === 'up' ? -1 : 1;
+                tag.style.transform = `translateY(${baseFloat + directionBoost}px) rotate(${scrolled * 0.02}deg)`;
+            }
+        });
+    } catch (e) {
+        console.warn('Enhanced animations error:', e);
+    }
+    
+    }, 16); // ~60fps throttling
 });
 
 // Typing effect
@@ -271,17 +339,35 @@ function typeWriter(element, text, speed = 100) {
     type();
 }
 
-// Enhanced loading screen
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        const loadingScreen = document.getElementById('loading-screen');
+// Enhanced loading screen with race condition protection
+let loadingScreenHidden = false;
+
+function hideLoadingScreen() {
+    if (loadingScreenHidden) return; // Prevent multiple executions
+    
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreenHidden = true;
         loadingScreen.style.opacity = '0';
         loadingScreen.style.transform = 'scale(1.1)';
         setTimeout(() => {
             loadingScreen.style.display = 'none';
         }, 800);
-    }, 2500);
+    }
+}
+
+// Hide loading screen when page loads or after timeout
+window.addEventListener('load', () => {
+    setTimeout(hideLoadingScreen, 1500);
     initAnimations();
+});
+
+// Fallback: Hide loading screen after maximum 3 seconds regardless
+setTimeout(hideLoadingScreen, 3000);
+
+// Also hide on DOMContentLoaded as backup
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(hideLoadingScreen, 2000);
     
     // Hero elements
     document.querySelectorAll('.hero-content > *').forEach((el, i) => {
@@ -306,11 +392,18 @@ window.addEventListener('load', () => {
         }, 800);
     }
     
-    setTimeout(() => typeWriter(document.querySelector('.hero-content h2'), 'Full Stack Web Developer', 150), 3000);
+    setTimeout(() => {
+        const heroSubtitle = document.querySelector('.hero-content h2');
+        if (heroSubtitle) {
+            typeWriter(heroSubtitle, 'Full Stack Web Developer', 150);
+        }
+    }, 3000);
 });
 
-// Contact form
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
+// Contact form with null check
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const submitBtn = this.querySelector('button[type="submit"]');
@@ -342,7 +435,10 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
             this.reset();
         }, 2000);
     }, 1500);
-});
+    });
+} else {
+    console.warn('Contact form not found');
+}
 
 const shakeStyles = document.createElement('style');
 shakeStyles.textContent = `
