@@ -495,3 +495,21 @@ document.addEventListener('keydown', function(event) {
         });
     }
 });
+
+// Toggle projects visibility
+function toggleProjects() {
+    const hiddenProjects = document.querySelectorAll('.hidden-project');
+    const button = document.querySelector('.view-all-container button');
+    
+    if (hiddenProjects[0].style.display === 'block') {
+        hiddenProjects.forEach(project => {
+            project.style.display = 'none';
+        });
+        button.textContent = 'View All Projects';
+    } else {
+        hiddenProjects.forEach(project => {
+            project.style.display = 'block';
+        });
+        button.textContent = 'Show Less';
+    }
+}

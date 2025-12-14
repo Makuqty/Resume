@@ -747,7 +747,7 @@ section {
     margin-top: 3rem;
 }
 
-.project-card.hidden {
+.hidden-project {
     display: none;
 }
 
