@@ -81,88 +81,11 @@ class ParticleSystem {
 
 new ParticleSystem();
 
-// Mobile menu (hamburger removed but keeping for compatibility)
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
 
-// Skip hamburger functionality if element doesn't exist
-if (!hamburger) {
-    console.log('Hamburger menu not found - mobile navigation disabled');
-}
 
-const mobileMenuStyles = document.createElement('style');
-mobileMenuStyles.textContent = `
-    @media (max-width: 768px) {
-        .nav-menu {
-            position: fixed;
-            top: 70px;
-            left: -100%;
-            width: 100%;
-            height: calc(100vh - 70px);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: left 0.3s ease;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav-menu.active {
-            left: 0;
-        }
-        
-        .nav-menu .nav-link {
-            font-size: 1.5rem;
-            margin: 1rem 0;
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-menu.active .nav-link {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .nav-menu.active .nav-link:nth-child(1) { transition-delay: 0.1s; }
-        .nav-menu.active .nav-link:nth-child(2) { transition-delay: 0.2s; }
-        .nav-menu.active .nav-link:nth-child(3) { transition-delay: 0.3s; }
-        .nav-menu.active .nav-link:nth-child(4) { transition-delay: 0.4s; }
-        .nav-menu.active .nav-link:nth-child(5) { transition-delay: 0.5s; }
-        
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-    }
-`;
-document.head.appendChild(mobileMenuStyles);
 
-// Only add hamburger functionality if element exists
-if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
 
-    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    }));
-}
 
-// Scroll progress
-const scrollProgress = document.createElement('div');
-scrollProgress.style.cssText = 'position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,#00d4ff,#ff0080);z-index:1001;transition:width 0.1s ease';
-document.body.appendChild(scrollProgress);
 
 
 
@@ -247,9 +170,7 @@ window.addEventListener('scroll', () => {
             console.warn('Parallax effect error:', e);
         }
     
-    // Progress bar
-    const scrollPercent = (scrolled / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-    scrollProgress.style.width = scrollPercent + '%';
+
     
     // Navbar
     const navbar = document.querySelector('.navbar');
@@ -296,7 +217,7 @@ window.addEventListener('scroll', () => {
             if (tag && tag.style) {
                 const baseFloat = Math.sin(scrolled * 0.01 + i) * 0.5;
                 const directionBoost = scrollDirection === 'up' ? -1 : 1;
-                tag.style.transform = `translateY(${baseFloat + directionBoost}px) rotate(${scrolled * 0.02}deg)`;
+                tag.style.transform = `translateY(${baseFloat + directionBoost}px)`;
             }
         });
     } catch (e) {
